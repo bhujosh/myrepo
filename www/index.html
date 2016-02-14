@@ -44,5 +44,19 @@
         <script type="text/javascript">
             app.initialize();
         </script>
+<script type="text/javascript">
+			var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { render: render});
+			
+			function render()
+			{
+				game.context.fillStyle = 'rgb(255,0,0)';
+			    	game.context.beginPath();
+				game.context.linewidth=10;
+    				game.context.fillRect(game.width/2-10,game.height/2-50,100,100);
+    				game.context.fillRect(game.width/2-40,game.height/2-150,100,100);
+    				game.context.fillRect(game.width/2-100,game.height/2,100,100);
+				game.context.closePath();
+			}
+		</script>
     </body>
 </html>
