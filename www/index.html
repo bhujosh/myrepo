@@ -35,24 +35,6 @@
 				
 				if(!game.device.desktop)
 				{
-					/*var gameAspRatio = mt.data.map.viewportWidth / mt.data.map.viewportHeight;
-    					//calculates aspect ratio of the device
-					var deviceAspRatio = window.innerWidth / window.innerHeight;
-    					var ratioDiv = gameAspRatio / deviceAspRatio;
-
-    					//if the screen is too narrow (larger than), there will be black borders on top and bottom of the screen
-    					//if too wide (smaller than) - borders on the sides
-    					if (ratioDiv > 1.2 || ratioDiv < 0.8) {
-        					game.scale.pageAlignVertically = true;
-        					game.scale.pageAlignHorizontally = true;
-        					game.scale.setShowAll();
-        					game.scale.refresh();
-    					}
-    					//else game is stretched
-    					else {
-        					game.scale.setMaximum();
-        					game.scale.setScreenSize(true);
-    					}*/
 					this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			        	this.scale.setScreenSize(true);
 				        this.game.state.start("preload");				
