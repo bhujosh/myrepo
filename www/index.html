@@ -35,7 +35,7 @@
 				
 				if(!game.device.desktop)
 				{
-					var gameAspRatio = mt.data.map.viewportWidth / mt.data.map.viewportHeight;
+					/*var gameAspRatio = mt.data.map.viewportWidth / mt.data.map.viewportHeight;
     					//calculates aspect ratio of the device
 					var deviceAspRatio = window.innerWidth / window.innerHeight;
     					var ratioDiv = gameAspRatio / deviceAspRatio;
@@ -52,7 +52,10 @@
     					else {
         					game.scale.setMaximum();
         					game.scale.setScreenSize(true);
-    					}				
+    					}*/
+					this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			        	this.scale.setScreenSize(true);
+				        this.game.state.start("preload");				
 				}	
 			}
 			function preload() 
