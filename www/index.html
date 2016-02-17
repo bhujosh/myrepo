@@ -12,14 +12,12 @@
 		<script type="text/javascript" src="cordova.js"></script>
         	<script type="text/javascript" src="js/index.js"></script>
 	   	<script type="text/javascript" src="js/phaser.min.js"></script>			
-        	<script type="text/javascript">
-            		app.initialize();
-        	</script>
+        	
 		<h1>Fruit Basket</h1>
 		<h2>Use arrow keys to move left or right</h2>
 		<h2>Press ESC whenever you want to stop the game</h2>
     		<script type="text/javascript">
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { boot:boot,preload: preload, create: create,update: update});
+			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {preload: preload, create: create,update: update});
 			var group1;
 			var basket;
 			var timer;
@@ -30,16 +28,6 @@
 			var esckey;
 			var gameOverText;
 
-			function boot()
-			{
-				
-				if(!game.device.desktop)
-				{
-					this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			        	this.scale.setScreenSize(true);
-				        this.game.state.start("preload");				
-				}	
-			}
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
