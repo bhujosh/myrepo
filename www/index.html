@@ -48,6 +48,10 @@
 
 				basket=game.add.sprite(game.width/2,game.height-50,'basket');
 				basket.scale.setTo(2,2);
+				//added for mobile
+				basket.inputEnabled=true;
+				basket.input.enableDrag(false);
+				//'****************
 				game.physics.arcade.enable(basket);
 
 				basket.body.collideWorldBounds=true;
@@ -68,7 +72,7 @@
 			function update()
 			{
 				game.physics.arcade.collide(basket,group1,collisionHandler,null,this);
-				if(cursors.left.isDown)
+				/*if(cursors.left.isDown)
 				{
 					basket.body.velocity.x-=20;
 				}
@@ -80,7 +84,7 @@
 				{
 					reset();
 					gameOverText=game.add.text(game.width/2-50, game.height/2,'Your Score is'+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });	
-				}
+				}*/
 			}
 			function collisionHandler(basket,sprite)
 			{
