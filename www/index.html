@@ -17,7 +17,6 @@
 		<h2>Use arrow keys to move left or right</h2>
 		<h2>Press ESC whenever you want to stop the game</h2>
     		<script type="text/javascript">
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', {preload: preload, create: create,update: update});
 			var group1;
 			var basket;
 			var timer;
@@ -27,7 +26,9 @@
 			var scoreText;
 			var esckey;
 			var gameOverText;
-
+			var wiw=window.innerWidth-20;
+			var wih=window.innerHeight-20;
+			var game = new Phaser.Game(wiw, wih, Phaser.AUTO, 'phaser-example', {preload: preload, create: create,update: update});
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
