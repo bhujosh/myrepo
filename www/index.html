@@ -25,16 +25,15 @@
 			var wih=window.innerHeight;
 			var imageX;
 			var imageY;
-			var gameStatus="";
+			var gameStatus="started";
 			var gameOverText;	
-			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {boot: boot,preload: preload, create: create,update: update,render: render});
+			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {boot: boot,preload:preload,create:create,update:update});
 			function boot()
 			{
 				//added for mobile screens
 				this.scale.ScaleMode=Phaser.ScaleManager.SHOW_ALL;
 				this.scale.forceOrientation(false,true);
 				this.scale.setResizeCallback(this.gameResized,this);
-				game.state.start(preload);
 				//--********************--
 			}
 			function preload() 
@@ -45,15 +44,13 @@
 			}
 			function create()
 			{
+				gameStatus="start";
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
-
 				gameStatus="started";	
-
 				background=game.add.image(0,0,'sky');	
 				background.width=wiw;
 				background.height=wih;
-
 				cursors = game.input.keyboard.createCursorKeys();
 	
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
@@ -63,11 +60,9 @@
 				basket.scale.setTo(1,1);
 				
 				game.physics.arcade.enable(basket);
-
 				basket.body.collideWorldBounds=true;
 				basket.body.immovable=true;
 				basket.body.allowGravity=false;
-
 				
 				group1=game.add.group();
 				group1.enableBody=true;
@@ -77,9 +72,9 @@
 				timer.loop(2000,releaseObject,this);
 				timer.start();
 				
-				scoreText = game.add.text(10, 10, 'Your score: 0', { font: "20px Arial", fill: "#000000", align: "left" });
+				scoreText = game.add.text(10, 10, 'Your score: 0 \n Touch on left of basket to move left.\n Touch on right of basket to move right', { font: "20px Arial", fill: "#000000", align: "left" });
 				game.input.onTap.add(onTap,this);
-			}	
+			}		
 			function onTap(pointer,doubleTap)
 			{
 				if(doubleTap)
@@ -91,21 +86,22 @@
 						sprite.destroy();
 						
 						gameStatus="gameover";
-						gameOverText=game.add.text(wiw/2-50, wih/2,'Your Score is '+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });		
+						gameOverText=game.add.text(wiw/2-300, wih/2,'Your Score is '+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });		
 					}
-					else
+					else 
 					{
 						game.world.remove(gameOverText);
 						gameStatus="started";
+						timer.start();
 						game.state.restart();
 						game.state.start('boot');
 					}
+					
 				}	
 				else
 				{
 					imageX=basket.body.x;
 					imageY=basket.body.y;
-
 					if(game.input.activePointer.y>=imageY && game.input.activePointer.y<=imageY+basket.body.height )
 					{
 						if(game.input.activePointer.x<imageX)
@@ -130,14 +126,6 @@
 			function update()
 			{
 				game.physics.arcade.collide(basket,group1,collisionHandler,null,this);
-				
-				
-			}
-			function render()
-			{
-				game.debug.pointer(game.input.activePointer);
-				game.debug.text(imageX,50,50);
-				game.debug.text(imageY,100,50);
 			}
 			function collisionHandler(basket,sprite)
 			{
@@ -145,7 +133,7 @@
 					score=score+10;
 				else
 					score=score-15;
-				scoreText.text='Your score: '+score;
+				scoreText.text='Your score: '+score + '\n Touch on left of basket to move left.\n Touch on right of basket to move right';
 				sprite.kill();
 				sprite.destroy();
 			}
