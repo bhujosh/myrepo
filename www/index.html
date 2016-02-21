@@ -4,7 +4,6 @@
 	        <meta name="format-detection" content="telephone=no" />
         	<meta name="msapplication-tap-highlight" content="no" />
 	        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
 	        <link rel="stylesheet" type="text/css" href="css/index.css" />
 	        <title>Game1: Fruit Basket</title>
     	</head>
@@ -12,10 +11,6 @@
 		<script type="text/javascript" src="cordova.js"></script>
         	<script type="text/javascript" src="js/index.js"></script>
 	   	<script type="text/javascript" src="js/phaser.min.js"></script>			
-        	
-		<h1>Fruit Basket</h1>
-		<h2>Use arrow keys to move left or right</h2>
-		<h2>Press ESC whenever you want to stop the game</h2>
     		<script type="text/javascript">
 			var group1;
 			var basket;
@@ -26,9 +21,11 @@
 			var scoreText;
 			var esckey;
 			var gameOverText;
-			var wiw=window.innerWidth-20;
-			var wih=window.innerHeight-20;
-			var game = new Phaser.Game(wiw, wih, Phaser.AUTO, 'phaser-example', {preload: preload, create: create,update: update});
+			var wiw=window.innerWidth;
+			var wih=window.innerHeight;
+			var imageX;
+			var imageY;	
+			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create,update: update,render: render});
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
@@ -41,25 +38,32 @@
 				game.physics.arcade.checkCollision.down=false;
 
 				//added for mobile screens
-				this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
-				this.scale.setResizeCallback(this.gameResized,this);
+				//this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
+				//this.scale.setResizeCallback(this.gameResized,this);
 				//--********************--
 
 				background=game.add.image(0,0,'sky');	
-				cursors = game.input.keyboard.createCursorKeys();	
+				background.width=wiw;
+				background.height=wih;
+
+				cursors = game.input.keyboard.createCursorKeys();
+	
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-				basket=game.add.sprite(game.width/2,game.height-50,'basket');
-				basket.scale.setTo(2,2);
+				
+				basket=game.add.sprite(wiw/2,wih-60,'basket');
+				basket.scale.setTo(2.5,2.5);
 				//added for mobile
-				basket.inputEnabled=true;
-				basket.input.enableDrag(false);
+				//basket.inputEnabled=true;
+				//basket.input.enableDrag(false);
 				//--****************--
+				
 				game.physics.arcade.enable(basket);
 
 				basket.body.collideWorldBounds=true;
 				basket.body.immovable=true;
 				basket.body.allowGravity=false;
+
 				
 				group1=game.add.group();
 				group1.enableBody=true;
@@ -71,14 +75,38 @@
 				
 				scoreText = game.add.text(10, 10, 'Your score: 0', { font: "20px Arial", fill: "#000000", align: "left" });
 				game.input.onTap.add(onTap,this);
+				//game.input.onDown.add(move,this);
 			}	
+			function move(pointer)
+			{
+				
+			}
 			function onTap(pointer,doubleTap)
 			{
 				if(doubleTap)
 				{
 					reset();
-					gameOverText=game.add.text(game.width/2-50, game.height/2,'Your Score is'+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });	
+					gameOverText=game.add.text(wiw/2-50, wih/2,'Your Score is'+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });	
 				}	
+				else
+				{
+					imageX=basket.body.x;
+					imageY=basket.body.y;
+
+					if(game.input.mousePointer.y>=imageY && game.input.mousePointer.y<=imageY+basket.body.height )
+					{
+						if(game.input.mousePointer.x<imageX)
+						{
+							//move left
+							basket.body.velocity.x-=200;
+						}
+						else if(game.input.mousePointer.x>imageX)
+						{
+							//move right
+							basket.body.velocity.x+=200;
+						}
+					}	
+				}
 			}
 			function gameResized()
 			{
@@ -89,6 +117,14 @@
 			function update()
 			{
 				game.physics.arcade.collide(basket,group1,collisionHandler,null,this);
+				
+				
+			}
+			function render()
+			{
+				game.debug.pointer(game.input.mousePointer);
+				game.debug.text(imageX,50,50);
+				game.debug.text(imageY,100,50);
 			}
 			function collisionHandler(basket,sprite)
 			{
