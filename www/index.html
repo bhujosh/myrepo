@@ -32,7 +32,7 @@
 			{
 				//added for mobile screens
 				this.scale.ScaleMode=Phaser.ScaleManager.SHOW_ALL;
-				this.scale(forceOrientation(false,true));
+				this.scale.forceOrientation(false,true);
 				this.scale.setResizeCallback(this.gameResized,this);
 				game.state.start(preload);
 				//--********************--
