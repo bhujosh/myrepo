@@ -56,14 +56,8 @@
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 				
-				basket=game.add.sprite(wiw/2,wih-60,'basket');
-				basket.scale.setTo(1,1);
-				
-				game.physics.arcade.enable(basket);
-				basket.body.collideWorldBounds=true;
-				basket.body.immovable=true;
-				basket.body.allowGravity=false;
-				
+				createBasket();
+
 				group1=game.add.group();
 				group1.enableBody=true;
 				group1.physicsBodyType=Phaser.Physics.ARCADE;
@@ -72,9 +66,20 @@
 				timer.loop(2000,releaseObject,this);
 				timer.start();
 				
-				scoreText = game.add.text(10, 10, 'Your score: 0 \n Touch on left of basket to move left.\n Touch on right of basket to move right', { font: "20px Arial", fill: "#000000", align: "left" });
+				scoreText = game.add.text(10, 10, 'Your score: 0 \n Touch on left of basket to move left.\n Touch on right of basket to move right\n Double tap to stop the game.', { font: "15px Arial", fill: "#000000", align: "left" });
 				game.input.onTap.add(onTap,this);
 			}		
+			function createBasket()
+			{
+				basket=game.add.sprite(wiw/2,wih-60,'basket');
+				basket.scale.setTo(1,1);
+				
+				game.physics.arcade.enable(basket);
+				basket.body.collideWorldBounds=true;
+				basket.body.immovable=true;
+				basket.body.allowGravity=false;
+				
+			}
 			function onTap(pointer,doubleTap)
 			{
 				if(doubleTap)
@@ -83,10 +88,10 @@
 					{	
 						timer.stop();
 						sprite.kill();
-						sprite.destroy();
-						
+						sprite.destroy();	
 						gameStatus="gameover";
-						gameOverText=game.add.text(wiw/2-300, wih/2,'Your Score is '+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });		
+						gameOverText=game.add.text(wiw/2, wih/2,'Score\n'+score + '\nDouble Tap \nto restart', { font: "20px Arial", fill: "#000000", align: "left" });		
+						score=0;
 					}
 					else 
 					{
@@ -133,7 +138,7 @@
 					score=score+10;
 				else
 					score=score-15;
-				scoreText.text='Your score: '+score + '\n Touch on left of basket to move left.\n Touch on right of basket to move right';
+				scoreText.text='Your score: '+score + '\n Touch on left of basket to move left.\n Touch on right of basket to move right\n Double tap to stop the game.';
 				sprite.kill();
 				sprite.destroy();
 			}
