@@ -24,8 +24,19 @@
 			var wiw=window.innerWidth;
 			var wih=window.innerHeight;
 			var imageX;
-			var imageY;	
-			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create,update: update,render: render});
+			var imageY;
+			var gameStatus="";
+			var gameOverText;	
+			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {boot: boot,preload: preload, create: create,update: update,render: render});
+			function boot()
+			{
+				//added for mobile screens
+				this.scale.ScaleMode=Phaser.ScaleManager.SHOW_ALL;
+				this.scale(forceOrientation(false,true));
+				this.scale.setResizeCallback(this.gameResized,this);
+				game.state.start(preload);
+				//--********************--
+			}
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
@@ -37,10 +48,7 @@
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
 
-				//added for mobile screens
-				this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
-				this.scale.setResizeCallback(this.gameResized,this);
-				//--********************--
+				gameStatus="started";	
 
 				background=game.add.image(0,0,'sky');	
 				background.width=wiw;
@@ -52,11 +60,7 @@
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 				
 				basket=game.add.sprite(wiw/2,wih-60,'basket');
-				basket.scale.setTo(2,2);
-				//added for mobile
-				//basket.inputEnabled=true;
-				//basket.input.enableDrag(false);
-				//--****************--
+				basket.scale.setTo(1,1);
 				
 				game.physics.arcade.enable(basket);
 
@@ -75,18 +79,27 @@
 				
 				scoreText = game.add.text(10, 10, 'Your score: 0', { font: "20px Arial", fill: "#000000", align: "left" });
 				game.input.onTap.add(onTap,this);
-				//game.input.onDown.add(move,this);
 			}	
-			function move(pointer)
-			{
-				
-			}
 			function onTap(pointer,doubleTap)
 			{
 				if(doubleTap)
 				{
-					reset();
-					gameOverText=game.add.text(wiw/2-50, wih/2,'Your Score is'+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });	
+					if(gameStatus=="started")
+					{	
+						timer.stop();
+						sprite.kill();
+						sprite.destroy();
+						
+						gameStatus="gameover";
+						gameOverText=game.add.text(wiw/2-50, wih/2,'Your Score is '+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });		
+					}
+					else
+					{
+						game.world.remove(gameOverText);
+						gameStatus="started";
+						game.state.restart();
+						game.state.start('boot');
+					}
 				}	
 				else
 				{
@@ -140,6 +153,7 @@
 			{
 				var rnum=game.rnd.between(0,5);
 				sprite=group1.create(game.rnd.between(1,game.width),0,'fandi',rnum);
+				sprite.scale.setTo(0.5,0.5);	
 				sprite.body.collideWorldBounds=true;
 				sprite.body.gravity.x=game.rnd.integerInRange(-50,50);
 				sprite.body.gravity.y=100+Math.random()*100;
