@@ -4,13 +4,16 @@
 	        <title>Game1: Fruit Basket</title>
 		<script src="js/phaser.min.js"></script>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet1.css" />
     	</head>
     	<body>
-		<h1>Fruit Basket</h1>
 		<h2>Use arrow keys to move left or right</h2>
 		<h2>Press ESC whenever you want to stop the game</h2>
-    		<script type="text/javascript">
-			var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create,update: update});
+    		<div id="header" align="center">
+			<h1 id="title">Fruit Basket</h1>
+		</div>
+		<script type="text/javascript">
+			var game = new Phaser.Game(window.innerWidth*window.devicePixelRatio, window.innerHeight*window.devicePixelRatio, Phaser.AUTO, 'phaser-example', { preload: preload, create: create,update: update},true);
 			var group1;
 			var basket;
 			var timer;
@@ -24,14 +27,14 @@
 			{
 				game.load.image('basket', 'images/basket3.png');
 			    	game.load.spritesheet('fandi', 'images/fruitsinsects.png', 64, 64);		   	
-				game.load.image('sky','images/starrysky.png');
+				//game.load.image('sky','images/starrysky.png');
 			}
 			function create()
 			{
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
 
-				background=game.add.image(0,0,'sky');	
+				//background=game.add.image(0,0,'sky');	
 
 				cursors = game.input.keyboard.createCursorKeys();	
 
