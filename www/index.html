@@ -92,25 +92,30 @@
 					}
 					
 				}
+				else
+				{
+					imageX=basket.body.x;
+					imageY=basket.body.y;
+					if(game.input.activePointer.y>=imageY-100 && game.input.activePointer.y<=imageY+basket.body.height+100 )
+					{
+						if(game.input.activePointer.x<imageX)
+						{
+							//move left
+							basket.body.velocity.x-=200;
+						}
+						else if(game.input.activePointer.x>imageX)
+						{
+							//move right
+							basket.body.velocity.x+=200;
+						}
+					}
+				}
+				
 			}
 			function update()
 			{
 				game.physics.arcade.collide(basket,group1,collisionHandler,null,this);
-				imageX=basket.body.x;
-				imageY=basket.body.y;
-				if(game.input.activePointer.y>=imageY-100 && game.input.activePointer.y<=imageY+basket.body.height+100 )
-				{
-					if(game.input.activePointer.x<imageX)
-					{
-						//move left
-						basket.body.velocity.x-=20;
-					}
-					else if(game.input.activePointer.x>imageX)
-					{
-						//move right
-						basket.body.velocity.x+=20;
-					}
-				}
+				
 			}
 			function collisionHandler(basket,sprite)
 			{
