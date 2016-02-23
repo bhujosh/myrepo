@@ -25,8 +25,8 @@
 			var scoreText;
 			var esckey;
 			var gameOverText;
-			var wiw=window.innerWidth-20;
-			var wih=window.innerHeight-document.getElementById("header").offsetHeight-60;
+			var wiw=window.screen.availHeight;
+			var wih=window.screen.availWidth-innerHeight-document.getElementById("header").offsetHeight;
 			var imageX;
 			var imageY;
 			var gameStatus="started";
@@ -36,7 +36,7 @@
 			{
 				//added for mobile screens
 				this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
-				this.scale.forceOrientation(false,true);
+				this.scale.forceOrientation(true,false);
 				this.scale.setResizeCallback(this.gameResized,this);
 				//--********************--
 			}
