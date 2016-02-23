@@ -4,11 +4,11 @@ body{
 }
 p {
     font-family: "Lucida Console";
-    font-size: 30px;
-    color:purple;
+    font-size: 25px;
+    color:#EFAA98;
     letter-spacing: 2px;
     text-align:center;
-    text-shadow: 3px 3px 4px white;	
+    text-shadow: 3px 3px 4px black;	
 				
 }
 
@@ -17,7 +17,7 @@ p {
     color: orange;
     text-align: center;
     font-family: "Comic Sans MS";
-    font-size: 60px;
+    font-size: 40px;
     text-shadow: 2px 2px 3px white,
 		 4px 4px 5px green;
 }

@@ -9,8 +9,12 @@
 	        <title>Game1: Fruit Basket</title>
 	</head>
 	<body> 
-		<div id="header">
+		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
+			<p>To move basket left:Touch on left side of the basket <br>
+			To move basket right:Touch on right side of the basket
+			Double Tap to stop and double tap again to restart
+			</p>
 		</div>
 		<div id="mygame">
 		<script type="text/javascript" src="cordova.js"></script>
@@ -26,9 +30,8 @@
 			var scoreText;
 			var esckey;
 			var gameOverText;
-			var divH=document.getElementById("header").offsetHeight;
-			var wiw=window.innerWidth;
-			var wih=window.innerHeight-divH;
+			var wiw=window.innerWidth-20;
+			var wih=window.innerHeight-document.getElementById("header").offsetHeight-60;
 			var imageX;
 			var imageY;
 			var gameStatus="started";
@@ -75,7 +78,7 @@
 				timer.loop(2000,releaseObject,this);
 				timer.start();
 				
-				scoreText = game.add.text(10, 10, 'Your score: 0 \n Touch on left of basket to move left.\n Touch on right of basket to move right\n Double tap to stop the game.', { font: "15px Arial", fill: "#000000", align: "left" });
+				scoreText = game.add.text(10, 10, 'Your score: 0', { font: "15px Arial", fill: "#000000", align: "left" });
 				game.input.onTap.add(onTap,this);
 			}		
 			function createBasket()
@@ -116,7 +119,7 @@
 				{
 					imageX=basket.body.x;
 					imageY=basket.body.y;
-					if(game.input.activePointer.y>=imageY && game.input.activePointer.y<=imageY+basket.body.height )
+					if(game.input.activePointer.y>=imageY-100 && game.input.activePointer.y<=imageY+basket.body.height+100 )
 					{
 						if(game.input.activePointer.x<imageX)
 						{
@@ -141,7 +144,7 @@
 					score=score+10;
 				else
 					score=score-15;
-				scoreText.text='Your score: '+score + '\n Touch on left of basket to move left.\n Touch on right of basket to move right\n Double tap to stop the game.';
+				scoreText.text='Your score: '+score;
 				sprite.kill();
 				sprite.destroy();
 			}
