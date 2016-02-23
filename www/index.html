@@ -6,7 +6,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/stylesheet1.css" />
     	</head>
-    	<body>
+    	<body >
 		<center>
 		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
@@ -14,9 +14,9 @@
 			<p>Double tap whenever you get bored</p>	
 		</div>
 		<script type="text/javascript">
-			var wiw=window.innerWidth*70/100;
-			var wih=(window.innerHeight-document.getElementById("header").offsetHeight)*70/100;
-			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create,update: update},true);
+			var wiw=window.innerWidth*window.devicePixelRatio;
+			var wih=(window.innerHeight-document.getElementById("header").offsetHeight)*window.devicePixelRatio;
+			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', {boot:boot, preload: preload, create: create,update: update},true);
 			var group1;
 			var basket;
 			var timer;
@@ -29,23 +29,38 @@
 			var imageX;
 			var imageY;
 			var gameStatus="started";
+			
+			function boot()
+			{
+				this.scale.ScaleMode=Phaser.ScaleManager.SHOW_ALL;
+				this.scale.forceOrientation(true,false);
+				this.scale.setResizeCallback(this.gameResized,this);
 
+				game.scale.pageAlignHorizontally = true;
+				game.scale.pageAlignVertically = true;
+				game.scale.refresh();
+				game.state.start("preload");
+				
+			}
+			function gameResized()
+			{
+    				scale = Math.min(wiw / game.width, wih/ game.height);
+ 				var manager=Phaser.ScaleManager;	
+				manager.setUserScale(scale, scale, 0, 0);
+			}
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
 			    	game.load.spritesheet('fandi', 'images/fruitsinsects.png', 64, 64);		   	
-				game.load.image('sky','images/starrysky.png');
+				//game.load.image('sky','images/starrysky.png');
 			}
 			function create()
 			{
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
 
-				background=game.add.image(0,0,'sky');	
+				//background=game.add.image(0,0,'sky');	
 				
-				game.scale.pageAlignHorizontally = true;
-				//game.scale.pageAlignVertically = true;
-				this.game.scale.refresh();
 				
 				cursors = game.input.keyboard.createCursorKeys();	
 
@@ -53,7 +68,7 @@
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
 				basket=game.add.sprite(wiw/2,wih-50,'basket');
-				basket.scale.setTo(2,2);
+				basket.scale.setTo(1,1);
 				game.physics.arcade.enable(basket);
 
 				basket.body.collideWorldBounds=true;
@@ -137,7 +152,7 @@
 				sprite.body.gravity.x=game.rnd.integerInRange(-50,50);
 				sprite.body.gravity.y=100+Math.random()*100;
 				sprite.body.bounce.setTo(0.9,0.9);
-				
+				sprite.scale.setTo(0.5,0.5);	
 			}
 		</script>
 		</center>
