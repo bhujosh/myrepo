@@ -3,7 +3,7 @@
 		<meta charset="UTF-8" />
 	        <title>Game1: Fruit Basket</title>
 		<script src="js/phaser.min.js"></script>
-		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		
 		<link rel="stylesheet" type="text/css" href="css/stylesheet1.css" />
     	</head>
     	<body>
@@ -11,10 +11,12 @@
 		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
 		</div>
+		<p>Touch on left of basket to move left and on right to move right</p>
+		<p>Double tap whenever you get bored</p>
 		<script type="text/javascript">
-			var wiw=window.innerWidth*70/100;
-			var wih=window.innerHeight*70/100;
-			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create,update: update});
+			var wiw=window.innerWidth*80/100;
+			var wih=window.innerHeight*80/100;
+			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create,update: update},true);
 			var group1;
 			var basket;
 			var timer;
@@ -42,7 +44,8 @@
 				background=game.add.image(0,0,'sky');	
 				
 				game.scale.pageAlignHorizontally = true;
-				game.scale.pageAlignVertically = true;this.game.scale.refresh();
+				//game.scale.pageAlignVertically = true;
+				this.game.scale.refresh();
 				
 				cursors = game.input.keyboard.createCursorKeys();	
 
@@ -88,7 +91,6 @@
 						gameStatus="started";
 						timer.start();
 						game.state.restart();
-						game.state.start('boot');
 					}
 					
 				}
