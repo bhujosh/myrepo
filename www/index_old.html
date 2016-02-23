@@ -32,8 +32,21 @@
 			var imageY;
 			var gameStatus="started";
 			var gameOverText;	
-			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {preload:preload,create:create,update:update},true);
-			
+			var game = new Phaser.Game(wiw, wih, Phaser.CANVAS, 'phaser-example', {boot: boot,preload:preload,create:create,update:update},true);
+			function boot()
+			{
+				//added for mobile screens
+				this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
+				this.scale.forceOrientation(true,false);
+				this.scale.setResizeCallback(this.gameResized,this);
+				//--********************--
+			}
+			function gameResized()
+			{
+    				scale = Math.min(wiw / this.game.width, wih/ this.game.height);
+ 				var manager=Phaser.ScaleManager;	
+				manager.setUserScale(scale, scale, 0, 0);
+			}
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
@@ -41,7 +54,6 @@
 			}
 			function create()
 			{
-				//this.scale.forceOrientation(false,true);
 				gameStatus="start";
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
