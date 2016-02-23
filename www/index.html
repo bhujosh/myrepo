@@ -5,16 +5,11 @@
         	<meta name="msapplication-tap-highlight" content="no" />
 	        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
 	        <link rel="stylesheet" type="text/css" href="css/stylesheet1.css" />
-	        
 	        <title>Game1: Fruit Basket</title>
 	</head>
 	<body> 
 		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
-			<p>To move basket left:Touch on left side of the basket <br>
-			To move basket right:Touch on right side of the basket
-			Double Tap to stop and double tap again to restart
-			</p>
 		</div>
 		<div id="mygame">
 		<script type="text/javascript" src="cordova.js"></script>
@@ -40,14 +35,14 @@
 			function boot()
 			{
 				//added for mobile screens
-				this.scale.ScaleMode=Phaser.ScaleManager.SHOW_ALL;
+				this.scale.ScaleMode=Phaser.ScaleManager.USER_SCALE;
 				this.scale.forceOrientation(false,true);
 				this.scale.setResizeCallback(this.gameResized,this);
 				//--********************--
 			}
 			function gameResized()
 			{
-    				scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height);
+    				scale = Math.min(wiw / this.game.width, wih/ this.game.height);
  				var manager=Phaser.ScaleManager;	
 				manager.setUserScale(scale, scale, 0, 0);
 			}
