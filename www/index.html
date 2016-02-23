@@ -10,12 +10,12 @@
 		<center>
 		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
+			<p>Touch on left of basket to move left and on right to move right</p>
+			<p>Double tap whenever you get bored</p>	
 		</div>
-		<p>Touch on left of basket to move left and on right to move right</p>
-		<p>Double tap whenever you get bored</p>
 		<script type="text/javascript">
 			var wiw=window.innerWidth*80/100;
-			var wih=window.innerHeight*80/100;
+			var wih=(window.innerHeight-document.getElementById("header").offsetHeight)*80/100;
 			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create,update: update},true);
 			var group1;
 			var basket;
