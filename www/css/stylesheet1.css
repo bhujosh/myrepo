@@ -1,6 +1,5 @@
 body{
-  	background-image: url("../images/starrysky.png");
-	background-repeat: repeat;
+	background-color: lightblue;	
 }
 p {
     font-family: "Lucida Console";

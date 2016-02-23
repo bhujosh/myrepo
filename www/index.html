@@ -7,13 +7,14 @@
 		<link rel="stylesheet" type="text/css" href="css/stylesheet1.css" />
     	</head>
     	<body>
-		<h2>Use arrow keys to move left or right</h2>
-		<h2>Press ESC whenever you want to stop the game</h2>
-    		<div id="header" align="center">
+		<center>
+		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
 		</div>
 		<script type="text/javascript">
-			var game = new Phaser.Game(window.innerWidth*window.devicePixelRatio, window.innerHeight*window.devicePixelRatio, Phaser.AUTO, 'phaser-example', { preload: preload, create: create,update: update},true);
+			var wiw=window.innerWidth*70/100;
+			var wih=window.innerHeight*70/100;
+			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create,update: update});
 			var group1;
 			var basket;
 			var timer;
@@ -23,25 +24,32 @@
 			var scoreText;
 			var esckey;
 			var gameOverText;
+			var imageX;
+			var imageY;
+			var gameStatus="started";
+
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
 			    	game.load.spritesheet('fandi', 'images/fruitsinsects.png', 64, 64);		   	
-				//game.load.image('sky','images/starrysky.png');
+				game.load.image('sky','images/starrysky.png');
 			}
 			function create()
 			{
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
 
-				//background=game.add.image(0,0,'sky');	
-
+				background=game.add.image(0,0,'sky');	
+				
+				game.scale.pageAlignHorizontally = true;
+				game.scale.pageAlignVertically = true;this.game.scale.refresh();
+				
 				cursors = game.input.keyboard.createCursorKeys();	
 
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-				basket=game.add.sprite(game.width/2,game.height-50,'basket');
+				basket=game.add.sprite(wiw/2,wih-50,'basket');
 				basket.scale.setTo(2,2);
 				game.physics.arcade.enable(basket);
 
@@ -58,23 +66,50 @@
 				timer.start();
 				
 				scoreText = game.add.text(10, 10, 'Your score: 0', { font: "20px Arial", fill: "#000000", align: "left" });
+				game.input.onTap.add(onTap,this);	
 			}
 			
+			function onTap(pointer,doubleTap)
+			{
+				if(doubleTap)
+				{
+					if(gameStatus=="started")
+					{	
+						timer.stop();
+						sprite.kill();
+						sprite.destroy();	
+						gameStatus="gameover";
+						gameOverText=game.add.text(wiw/2, wih/2,'Score\n'+score + '\nDouble Tap \nto restart', { font: "20px Arial", fill: "#000000", align: "left" });		
+						score=0;
+					}
+					else 
+					{
+						game.world.remove(gameOverText);
+						gameStatus="started";
+						timer.start();
+						game.state.restart();
+						game.state.start('boot');
+					}
+					
+				}
+			}
 			function update()
 			{
 				game.physics.arcade.collide(basket,group1,collisionHandler,null,this);
-				if(cursors.left.isDown)
+				imageX=basket.body.x;
+				imageY=basket.body.y;
+				if(game.input.activePointer.y>=imageY-100 && game.input.activePointer.y<=imageY+basket.body.height+100 )
 				{
-					basket.body.velocity.x-=20;
-				}
-				else if(cursors.right.isDown)
-				{
-					basket.body.velocity.x+=20;
-				}	
-				if(esckey.isDown)
-				{
-					reset();
-					gameOverText=game.add.text(game.width/2-50, game.height/2,'Your Score is'+score + '\nThank you for playing FruitBasket', { font: "20px Arial", fill: "#000000", align: "left" });	
+					if(game.input.activePointer.x<imageX)
+					{
+						//move left
+						basket.body.velocity.x-=20;
+					}
+					else if(game.input.activePointer.x>imageX)
+					{
+						//move right
+						basket.body.velocity.x+=20;
+					}
 				}
 			}
 			function collisionHandler(basket,sprite)
@@ -90,7 +125,7 @@
 			function releaseObject()
 			{
 				var rnum=game.rnd.between(0,5);
-				sprite=group1.create(game.rnd.between(1,game.width),0,'fandi',rnum);
+				sprite=group1.create(game.rnd.between(1,wiw),0,'fandi',rnum);
 				sprite.body.collideWorldBounds=true;
 				sprite.body.gravity.x=game.rnd.integerInRange(-50,50);
 				sprite.body.gravity.y=100+Math.random()*100;
@@ -98,5 +133,6 @@
 				
 			}
 		</script>
+		</center>
 	</body>
 </html>

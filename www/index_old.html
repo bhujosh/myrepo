@@ -115,14 +115,14 @@
 				{
 					imageX=basket.body.x;
 					imageY=basket.body.y;
-					if(game.input.activePointer.y>=imageY-100 && game.input.activePointer.y<=imageY+basket.body.height+100 )
+					if(game.input.y>=imageY-100 && game.input.y<=imageY+basket.body.height+100 )
 					{
-						if(game.input.activePointer.x<imageX)
+						if(game.input.x<imageX)
 						{
 							//move left
 							basket.body.velocity.x-=200;
 						}
-						else if(game.input.activePointer.x>imageX)
+						else if(game.input.x>imageX)
 						{
 							//move right
 							basket.body.velocity.x+=200;
