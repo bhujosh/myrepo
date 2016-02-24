@@ -16,7 +16,8 @@
 		<script type="text/javascript">
 			var wiw=window.innerWidth;
 			var wih=window.innerHeight;
-			var game = new Phaser.Game(wiw,wih, Phaser.CANVAS, 'phaser-example', {preload: preload, create: create,update: update},true);
+			var gratio=wiw/wih;
+			var game = new Phaser.Game(Math.ceil(wiw/gratio),Math.ceil(wih/gratio), Phaser.CANVAS, 'phaser-example', {preload: preload, create: create,update: update},true);
 			var group1;
 			var basket;
 			var timer;
@@ -30,7 +31,7 @@
 			var imageY;
 			var gameStatus="started";
 			
-			
+ 			
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
@@ -42,14 +43,17 @@
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
 
-				this.game.world.setBounds(0, 0, wiw, wih);
+				//this.game.world.setBounds(0, 0, game.width, game.height);
 				
-				this.scale.scaleMode=Phaser.ScaleManager.SHOW_ALL;
+				
+				this.scale.scaleMode=Phaser.ScaleManager.USER_SCALE;
 				this.scale.pageAlignHorizontally = true;
 				this.scale.pageAlignVertically = true;
 				this.scale.refresh();
+				
 
-
+				
+				
 				//background=game.add.image(0,0,'sky');	
 				
 				
@@ -58,7 +62,7 @@
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-				basket=game.add.sprite(wiw/2,wih-50,'basket');
+				basket=game.add.sprite(game.width/2,game.height-40,'basket');
 				basket.scale.setTo(1,1);
 				game.physics.arcade.enable(basket);
 
@@ -88,7 +92,7 @@
 						sprite.kill();
 						sprite.destroy();	
 						gameStatus="gameover";
-						gameOverText=game.add.text(wiw/2, wih/2,'Score\n'+score + '\nDouble Tap \nto restart', { font: "20px Arial", fill: "#000000", align: "left" });		
+						gameOverText=game.add.text(game.width/2, game.height/2,'Score\n'+score + '\nDouble Tap \nto restart', { font: "20px Arial", fill: "#000000", align: "left" });		
 						score=0;
 					}
 					else 
@@ -138,7 +142,7 @@
 			function releaseObject()
 			{
 				var rnum=game.rnd.between(0,5);
-				sprite=group1.create(game.rnd.between(1,wiw),0,'fandi',rnum);
+				sprite=group1.create(game.rnd.between(1,game.width),0,'fandi',rnum);
 				sprite.body.collideWorldBounds=true;
 				sprite.body.gravity.x=game.rnd.integerInRange(-50,50);
 				sprite.body.gravity.y=100+Math.random()*100;
