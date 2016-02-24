@@ -17,7 +17,7 @@
 			var wiw=window.innerWidth;
 			var wih=window.innerHeight;
 			var gratio=wiw/wih;
-			var game = new Phaser.Game(Math.ceil(wiw*gratio),wih, Phaser.CANVAS, 'phaser-example', {boot:boot,preload: preload, create: create,update: update});
+			var game = new Phaser.Game(Math.ceil(wiw*gratio),Math.ceil(wih*gratio), Phaser.CANVAS, 'phaser-example', {boot:boot,preload: preload, create: create,update: update});
 			var group1;
 			var basket;
 			var timer;
@@ -54,13 +54,14 @@
 				
 				//background=game.add.image(0,0,'sky');	
 				
-				
+				game.stage.backgroundColor='#ABCDEF';
+
 				cursors = game.input.keyboard.createCursorKeys();	
 
 				spacekey=game.input.keyboard.addKey(Phaser.Keyboard.UP);
 				esckey=game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-				basket=game.add.sprite(game.width/2,game.height-20,'basket');
+				basket=game.add.sprite(game.width/2,game.height-30,'basket');
 				basket.scale.setTo(1,1);
 				game.physics.arcade.enable(basket);
 
