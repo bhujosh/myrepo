@@ -10,7 +10,7 @@
 		<center>
 		<div id="header" align="center">
 			<h1 id="title">Fruit Basket</h1>
-			<p>Touch on left of basket to move left and on right to move right</p>
+			<p>Touch on left or right of the basket to move it</p>
 			<p>Double tap whenever you get bored</p>	
 		</div>
 		<script type="text/javascript">
@@ -35,7 +35,7 @@
 			{
 				this.scale.scaleMode=Phaser.ScaleManager.USER_SCALE;
 				this.scale.pageAlignHorizontally = true;
-				// this.scale.pageAlignVertically = true;
+				this.scale.pageAlignVertically = true;
 				this.scale.forceOrientation(false,true);	
 				this.scale.refresh();
 			}
