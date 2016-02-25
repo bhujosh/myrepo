@@ -4,7 +4,7 @@ body{
 }
 p {
     font-family: "Lucida Console";
-    font-size: 100%;
+    font-size: 90%;
     font-bold: true;	
     color:#FF7A98;
     letter-spacing: 2px;
@@ -18,7 +18,7 @@ p {
     color: orange;
     text-align: center;
     font-family: "Comic Sans MS";
-    font-size: 150%;
+    font-size: 130%;
     text-shadow: 2px 2px 3px white,
 		 4px 4px 5px green;
 }
