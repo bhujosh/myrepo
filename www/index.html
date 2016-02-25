@@ -30,29 +30,23 @@
 			var imageX;
 			var imageY;
 			var gameStatus="started";
-			
  			function boot()
 			{
 				this.scale.scaleMode=Phaser.ScaleManager.USER_SCALE;
 				this.scale.pageAlignHorizontally = true;
 				this.scale.pageAlignVertically = true;
-				this.scale.forceOrientation(false,true);	
+				//game.scale.forceOrientation(false,true);	
 				this.scale.refresh();
 			}
 			function preload() 
 			{
 				game.load.image('basket', 'images/basket3.png');
-			    	game.load.spritesheet('fandi', 'images/fruitsinsects.png', 64, 64);		   	
-				//game.load.image('sky','images/starrysky.png');
+			    	game.load.spritesheet('fandi', 'images/fruitsinsects.png', 64, 64);		   		
 			}
 			function create()
 			{
 				game.physics.startSystem(Phaser.Physics.ARCADE);
 				game.physics.arcade.checkCollision.down=false;
-
-				//this.game.world.setBounds(0, 0, game.width, game.height);
-				
-				//background=game.add.image(0,0,'sky');	
 				
 				game.stage.backgroundColor='#ABCDEF';
 
