@@ -14,8 +14,8 @@
 			<p>Double tap whenever you get bored</p>	
 		</div>
 		<script type="text/javascript">
-			var wiw=window.innerWidth;
-			var wih=window.innerHeight;
+			var wiw=window.outerWidth;
+			var wih=window.outerHeight;
 			var gratio=wiw/wih;
 			var game = new Phaser.Game(Math.ceil(wiw*gratio),Math.ceil(wih*gratio), Phaser.CANVAS, 'phaser-example', {boot:boot,preload: preload, create: create,update: update});
 			var group1;
